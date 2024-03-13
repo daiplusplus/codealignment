@@ -9,7 +9,7 @@ namespace CMcG.CodeAlignment
 {
     public class AlignFunctions
     {
-        Business.Options m_options       = new Business.Options();
+        Business.CodeAlignmentOptions m_options       = new Business.CodeAlignmentOptions();
         Point            m_keyGrabOffset = new Point(10, -50);
 
         public IUIManager UIManager { get; set; }
@@ -22,7 +22,7 @@ namespace CMcG.CodeAlignment
             set { this.m_keyGrabOffset = value; }
         }
 
-        public void AlignBy( String alignDelimiter, Boolean alignFromCaret = false, Boolean useRegex = false, Boolean addSpace = false)
+        public void AlignBy(String alignDelimiter, Boolean alignFromCaret = false, Boolean useRegex = false, Boolean addSpace = false)
         {
             if (!String.IsNullOrEmpty(alignDelimiter))
             {
@@ -39,7 +39,7 @@ namespace CMcG.CodeAlignment
             }
         }
 
-        public void AlignByDialog( Boolean alignFromCaret = false)
+        public void AlignByDialog(Boolean alignFromCaret = false)
         {
             IAlignmentDetails result = this.UIManager.PromptForAlignment(alignFromCaret);
             if (result != null)
@@ -48,7 +48,7 @@ namespace CMcG.CodeAlignment
             }
         }
 
-        private Alignment CreateAlignment( Boolean useRegex = false)
+        private Alignment CreateAlignment(Boolean useRegex = false)
         {
             Alignment alignment = new Alignment
             {
@@ -56,7 +56,7 @@ namespace CMcG.CodeAlignment
                 UseIdeTabSettings = this.m_options.UseIdeTabSettings
             };
 
-            if ( this.m_options.XmlTypes.Contains( this.Document.FileType))
+            if (this.m_options.XmlTypes.Contains(this.Document.FileType))
             {
                 alignment.Selector = new XmlScopeSelector
                 {

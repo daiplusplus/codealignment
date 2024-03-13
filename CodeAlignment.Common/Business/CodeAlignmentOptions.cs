@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
@@ -12,11 +12,11 @@ namespace CMcG.CodeAlignment.Business
 {
     using Settings = Properties.Settings;
 
-    public class Options : INotifyPropertyChanged
+    public class CodeAlignmentOptions : INotifyPropertyChanged
     {
         private Settings m_settings = Settings.Default;
 
-        public Options()
+        public CodeAlignmentOptions()
         {
             this.Reload();
         }
@@ -44,12 +44,18 @@ namespace CMcG.CodeAlignment.Business
             }
         }
 
-        String ToOrRegex( String input, String format )
+        private String ToOrRegex(String input, String format)
         {
-            IEnumerable<String> items = input.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
-                             .Select(x => Regex.Escape(x));
+            List<String> items = input
+                .Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries)
+                .Select(x => Regex.Escape(x))
+				.ToList();
 
-            return items.Any() ? String.Format(format, items.Aggregate("|")) : null;
+			if (items.Count == 0) return null;
+
+			String regexOr = String.Join(separator: "|", items);
+
+            return String.Format(format, regexOr);
         }
 
         public String ScopeSelectorLineValues { get; set; }
@@ -58,11 +64,13 @@ namespace CMcG.CodeAlignment.Business
 
         public String XmlTypesString
         {
-            get { return this.XmlTypes.Aggregate("\r\n"); }
+            get { return String.Join(separator: "\r\n", this.XmlTypes); }
             set
             {
-                this.XmlTypes = value.Split('\n')
-                                .Select(x => x.Trim().ToLower()).ToArray();
+                this.XmlTypes = value
+					.Split('\n')
+                    .Select(x => x.Trim().ToLower())
+					.ToArray();
             }
         }
 
@@ -142,7 +150,7 @@ namespace CMcG.CodeAlignment.Business
 
         private void FirePropertyChanged(params String[] propertyNames)
         {
-            var del = this.PropertyChanged;
+            PropertyChangedEventHandler del = this.PropertyChanged;
             if (del is null) return;
 
             foreach (String propertyName in propertyNames)

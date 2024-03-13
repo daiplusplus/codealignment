@@ -7,8 +7,8 @@ namespace CMcG.CodeAlignment.Options
 {
     public partial class ScreenGeneral : Controls.BaseUserControl
     {
-        Business.Options m_options;
-        public ScreenGeneral(Business.Options options)
+        Business.CodeAlignmentOptions m_options;
+        public ScreenGeneral(Business.CodeAlignmentOptions options)
         {
             this.InitializeComponent();
             this.m_options              = options;

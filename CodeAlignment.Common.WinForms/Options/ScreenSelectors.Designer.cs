@@ -63,7 +63,7 @@
             // 
             // bindOptions
             // 
-            this.bindOptions.DataSource = typeof(CMcG.CodeAlignment.Business.Options);
+            this.bindOptions.DataSource = typeof(CMcG.CodeAlignment.Business.CodeAlignmentOptions);
             // 
             // btnRestoreDefaults
             // 

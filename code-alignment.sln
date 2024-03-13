@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		CodeAlignment.snk = CodeAlignment.snk
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{3C9EEF60-DF71-4654-A77C-0B7E3621C2E2}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAlignment.VisualStudio", "CodeAlignment.VisualStudio\CodeAlignment.VisualStudio.csproj", "{591B6F7C-1E86-4828-9F88-6A55556AA3A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CodeAlignment.Common", "CodeAlignment.Common\CodeAlignment.Common.csproj", "{F33D2D88-A998-4F74-AB41-AB81878BB296}"
@@ -98,9 +96,6 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{F54B4D8A-EA40-434E-8A6B-8F38B61C023D} = {3C9EEF60-DF71-4654-A77C-0B7E3621C2E2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8AB44188-CB15-4C92-9445-9031853AECD6}

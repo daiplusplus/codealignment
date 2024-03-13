@@ -6,7 +6,7 @@ namespace CMcG.CodeAlignment.Options
 {
     public partial class FormOptions : Controls.BaseForm
     {
-        Business.Options m_options = new Business.Options();
+        Business.CodeAlignmentOptions m_options = new Business.CodeAlignmentOptions();
         public FormOptions()
         {
             this.InitializeComponent();

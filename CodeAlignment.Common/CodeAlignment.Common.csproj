@@ -52,7 +52,7 @@
     <Compile Include="AboutData.cs" />
     <Compile Include="Business\DelimiterFinders\DelimiterResult.cs" />
     <Compile Include="Business\LineDetails.cs" />
-    <Compile Include="Business\Options.cs" />
+    <Compile Include="Business\CodeAlignmentOptions.cs" />
     <Compile Include="Business\Key.cs" />
     <Compile Include="Business\KeyShortcut.cs" />
     <Compile Include="Interactions\IUIManager.cs" />

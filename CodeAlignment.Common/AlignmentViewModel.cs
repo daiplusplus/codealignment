@@ -7,7 +7,7 @@ namespace CMcG.CodeAlignment
 {
     public class AlignmentViewModel
     {
-        Business.Options m_options = new Business.Options();
+        Business.CodeAlignmentOptions m_options = new Business.CodeAlignmentOptions();
         Alignment m_alignment;
         AlignFunctions m_functions;
 
@@ -45,9 +45,9 @@ namespace CMcG.CodeAlignment
             return shortcut.UseRegex ? new RegexDelimiterFinder() : new NormalDelimiterFinder();
         }
 
-        Int32 GetMinIndex( Boolean forceFromCaret, KeyShortcut shortcut)
+        Int32 GetMinIndex(Boolean forceFromCaret, KeyShortcut shortcut)
         {
-            if ( this.m_lastAlignment != -1)
+            if (this.m_lastAlignment != -1)
             {
                 return this.m_lastAlignment + 1;
             }

@@ -59,7 +59,7 @@
             // 
             // bindKeyLookup
             // 
-            this.bindKeyLookup.DataSource = typeof(CMcG.CodeAlignment.Options.KeyLookup);
+            this.bindKeyLookup.DataSource = typeof(CMcG.CodeAlignment.KeyLookup);
             // 
             // txtShortcut
             // 

@@ -23,11 +23,9 @@ namespace CMcG.CodeAlignment.Test.Business
                 Value          = Key.EqualsPlus
             };
 
-            String xml        = KeyShortcut.Serialize(new[] { shortcut });
+            String xml = KeyShortcut.Serialize(new[] { shortcut });
             KeyShortcut[] cloneArray = KeyShortcut.Get(xml);
-            Assert.Single(cloneArray);
-
-            KeyShortcut clone = cloneArray[0];
+            KeyShortcut clone = Assert.Single(cloneArray);
 
             Assert.Equal(shortcut.AddSpace,       clone.AddSpace);
             Assert.Equal(shortcut.AlignFromCaret, clone.AlignFromCaret);

@@ -1,8 +1,10 @@
-﻿using Xunit;
-using System;
-using System.Linq;
+﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+
 using CMcG.CodeAlignment.Business;
+
+using Xunit;
 
 namespace CMcG.CodeAlignment.Test.Business
 {
@@ -39,9 +41,9 @@ namespace CMcG.CodeAlignment.Test.Business
         public void MaxBy()
         {
             String[] data = new[] { "A", "B", "C", "DZ" };
-            Assert.Throws<ArgumentNullException>    (() => ((IEnumerable<String>)null).MaxBy(x => x.Length));
-            Assert.Throws<ArgumentNullException>    (() => data.MaxBy<String, Int32>(null));
-            Assert.Throws<InvalidOperationException>(() => new String[0].MaxBy(x => x.Length));
+            _ = Assert.Throws<ArgumentNullException>    (() => ((IEnumerable<String>)null).MaxBy(x => x.Length));
+            _ = Assert.Throws<ArgumentNullException>    (() => data.MaxBy<String, Int32>(null));
+            _ = Assert.Throws<InvalidOperationException>(() => new String[0].MaxBy(x => x.Length));
 
             Assert.Equal("DZ", data.MaxBy(x => x.Length));
             Assert.Equal("A",  data.Take(3).MaxBy(x => x.Length));
@@ -51,20 +53,12 @@ namespace CMcG.CodeAlignment.Test.Business
         public void MaxItemsBy()
         {
             String[] data = new[] { "A", "B", "C", "AA", "BB", "DZZ" };
-            Assert.Throws<ArgumentNullException>    (() => ((IEnumerable<String>)null).MaxItemsBy(x => x.Length));
-            Assert.Throws<ArgumentNullException>    (() => data.MaxItemsBy<String, Int32>(null));
-            Assert.Throws<InvalidOperationException>(() => new String[0].MaxItemsBy(x => x.Length));
+            _ = Assert.Throws<ArgumentNullException>    (() => ((IEnumerable<String>)null).MaxItemsBy(x => x.Length));
+            _ = Assert.Throws<ArgumentNullException>    (() => data.MaxItemsBy<String, Int32>(null));
+            _ = Assert.Throws<InvalidOperationException>(() => new String[0].MaxItemsBy(x => x.Length));
 
             Assert.Equal(new[] { "DZZ" },      data        .MaxItemsBy(x => x.Length));
             Assert.Equal(new[] { "AA", "BB" }, data.Take(5).MaxItemsBy(x => x.Length));
-        }
-
-        [Fact]
-        public void Aggregate()
-        {
-            Assert.Equal(String.Empty, new String[0]     .Aggregate(", "));
-            Assert.Equal("A",          new[] { "A" }     .Aggregate(", "));
-            Assert.Equal("A, B",       new[] { "A", "B" }.Aggregate(", "));
         }
     }
 }
