@@ -7,7 +7,7 @@ namespace CMcG.CodeAlignment.Business
 {
     public class LineDetails
     {
-        public LineDetails(ILine line, IDelimiterFinder finder, String delimiter, Int32 minIndex, Int32 tabSize )
+        public LineDetails(ILine line, IDelimiterFinder finder, String delimiter, Int32 minIndex, Int32 tabSize)
         {
             String withoutTabs = line.Text.ReplaceTabs(tabSize);
             this.Line            = line;

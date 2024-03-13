@@ -24,7 +24,7 @@ namespace CMcG.CodeAlignment
             this.m_functions.AlignByDialog(alignFromCaret:true);
         }
 
-        public Int32 PerformAlign(Key key, Boolean forceFromCaret )
+        public Int32 PerformAlign(Key key, Boolean forceFromCaret)
         {
             this.m_alignment.View.Refresh();
             KeyShortcut shortcut = this.m_options.GetShortcut(key, this.m_functions.Document.FileType);

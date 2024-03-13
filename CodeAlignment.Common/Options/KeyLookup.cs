@@ -11,10 +11,10 @@ namespace CMcG.CodeAlignment
             this.Value = key;
 
             this.Description =
-                (key >= Key.D0 && key <= Key.D9 ) ? key.ToString().Substring(1) :
-                (key == Key.OpenBrackets        ) ? "Open Brackets"  :
-                (key == Key.CloseBrackets       ) ? "Close Brackets" :
-                (key == Key.EqualsPlus          ) ? "Equals Plus"    : key.ToString();
+                (key >= Key.D0 && key <= Key.D9) ? key.ToString().Substring(1) :
+                (key == Key.OpenBrackets       ) ? "Open Brackets"  :
+                (key == Key.CloseBrackets      ) ? "Close Brackets" :
+                (key == Key.EqualsPlus         ) ? "Equals Plus"    : key.ToString();
         }
 
         public Key    Value       { get; set; }

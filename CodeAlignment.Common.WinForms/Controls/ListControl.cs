@@ -38,7 +38,7 @@ namespace CMcG.CodeAlignment.Controls
 
         public void RefreshList()
         {
-            foreach (Control ctl in this.Controls )
+            foreach (Control ctl in this.Controls)
             {
                 ctl.Dispose();
             }
@@ -60,7 +60,7 @@ namespace CMcG.CodeAlignment.Controls
             }
         }
 
-        public void AddItem(Object context )
+        public void AddItem(Object context)
         {
             this.Items.Add(context);
             this.Controls.Add(this.CreateChild(context));
@@ -82,7 +82,7 @@ namespace CMcG.CodeAlignment.Controls
             return panel;
         }
 
-        void RemoveItem(Object context )
+        void RemoveItem(Object context)
         {
             this.Items.Remove(context);
             this.RefreshList();

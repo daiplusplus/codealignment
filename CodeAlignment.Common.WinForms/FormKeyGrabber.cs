@@ -90,7 +90,7 @@ namespace CMcG.CodeAlignment
             base.WndProc(ref m);
         }
 
-        Int64 ToUnsigned(Int64 intValue ) => intValue & 0xffffffffL;
+        Int64 ToUnsigned(Int64 intValue) => intValue & 0xffffffffL;
 
         public void Display() => this.ShowDialog();
 

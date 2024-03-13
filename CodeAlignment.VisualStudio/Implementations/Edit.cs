@@ -13,7 +13,7 @@ namespace CMcG.CodeAlignment.Implementations
             this.m_edit = edit;
         }
 
-        public System.Boolean Insert(ILine line, System.Int32 position, System.String text )
+        public System.Boolean Insert(ILine line, System.Int32 position, System.String text)
         {
             return this.m_edit.Insert(line.Position + position, text);
         }

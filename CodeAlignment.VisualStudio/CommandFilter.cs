@@ -17,7 +17,7 @@ namespace CMcG.CodeAlignment
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (cmdGroup != this.CommandGuid )
+            if (cmdGroup != this.CommandGuid)
             {
                 return this.Next.Exec(ref cmdGroup, cmdId, options, inArg, outArg);
             }
@@ -31,7 +31,7 @@ namespace CMcG.CodeAlignment
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (cmdGroup != this.CommandGuid )
+            if (cmdGroup != this.CommandGuid)
             {
                 return this.Next.QueryStatus(ref cmdGroup, cmdCount, cmds, cmdText);
             }
@@ -44,16 +44,16 @@ namespace CMcG.CodeAlignment
             return VSConstants.S_OK;
         }
 
-        public OLECMDF CanExecuteResult(UInt32 cmdId )
+        public OLECMDF CanExecuteResult(UInt32 cmdId)
         {
             return this.CanExecute(cmdId) ?
-                (OLECMDF.OLECMDF_ENABLED | OLECMDF.OLECMDF_SUPPORTED ) :
-                (OLECMDF.OLECMDF_SUPPORTED );
+                (OLECMDF.OLECMDF_ENABLED | OLECMDF.OLECMDF_SUPPORTED) :
+                (OLECMDF.OLECMDF_SUPPORTED);
         }
 
-        public virtual Boolean CanExecute(UInt32 cmdId ) => true;
+        public virtual Boolean CanExecute(UInt32 cmdId) => true;
 
-        public abstract void Execute(UInt32 cmdId );
+        public abstract void Execute(UInt32 cmdId);
 
         public static void Register(IVsTextView textViewAdapter, CommandFilter filter)
         {

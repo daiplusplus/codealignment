@@ -28,7 +28,7 @@ namespace CMcG.CodeAlignment.Test.Business.Mocks
         public Int32 TabSize                  { get; set; }
         public String FileType                 { get; set; }
 
-        public ILine GetLineFromLineNumber(Int32 lineNo )
+        public ILine GetLineFromLineNumber(Int32 lineNo)
         {
             return this.m_lines[lineNo];
         }
