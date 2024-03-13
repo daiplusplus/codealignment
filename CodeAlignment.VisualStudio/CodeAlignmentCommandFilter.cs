@@ -22,7 +22,7 @@ namespace CMcG.CodeAlignment
             get { return GuidList.CmdSetGuid; }
         }
 
-        public override void Execute( UInt32 cmdId )
+        public override void Execute(UInt32 cmdId )
         {
             AlignFunctions functions = new AlignFunctions
             {
@@ -43,6 +43,8 @@ namespace CMcG.CodeAlignment
                 case Commands.AlignByPeriod       : functions.AlignBy(Key.Period);                break;
                 case Commands.AlignBySpace        : functions.AlignBy(Key.Space);                 break;
                 case Commands.AlignFromCaret      : functions.AlignByDialog(alignFromCaret:true); break;
+                case Commands.AlignByColon        : functions.AlignBy(":");                       break;
+                case Commands.AlignByComma        : functions.AlignBy(",");                       break;
             }
         }
     }

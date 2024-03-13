@@ -38,7 +38,7 @@ namespace CMcG.CodeAlignment.Business
             return targetPosition;
         }
 
-        void CommitChanges(LineDetails[] data, Int32 targetPosition)
+        private void CommitChanges(LineDetails[] data, Int32 targetPosition)
         {
             using (IEdit edit = this.View.StartEdit())
             {
@@ -49,6 +49,8 @@ namespace CMcG.CodeAlignment.Business
                         return;
                     }
                 }
+
+				#warning TODO: After inserting the spaces to align things, then remove all redundant spaces.
 
                 edit.Commit();
             }

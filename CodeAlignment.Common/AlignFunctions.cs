@@ -9,8 +9,8 @@ namespace CMcG.CodeAlignment
 {
     public class AlignFunctions
     {
-        Business.CodeAlignmentOptions m_options       = new Business.CodeAlignmentOptions();
-        Point            m_keyGrabOffset = new Point(10, -50);
+        private CodeAlignmentOptions m_options       = new CodeAlignmentOptions();
+        private Point                m_keyGrabOffset = new Point(10, -50);
 
         public IUIManager UIManager { get; set; }
         public IDocument  Document  { get; set; }
