@@ -9,11 +9,11 @@ namespace CMcG.CodeAlignment.Controls
     {
         public BaseUserControl()
         {
-            Font = new Font(SystemFonts.MessageBoxFont.FontFamily, 9.0F);
+            this.Font = new Font(SystemFonts.MessageBoxFont.FontFamily, 9.0F);
 
-            InitializeComponent();
+            this.InitializeComponent();
 
-            AutoScaleMode = AutoScaleMode.Font;
+            this.AutoScaleMode = AutoScaleMode.Font;
         }
     }
 }

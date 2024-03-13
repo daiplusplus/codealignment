@@ -10,54 +10,63 @@ namespace CMcG.CodeAlignment.Business
         public IDocument        View              { get; set; }
         public IScopeSelector   Selector          { get; set; }
         public IDelimiterFinder Finder            { get; set; }
-        public bool             UseIdeTabSettings { get; set; }
+        public Boolean UseIdeTabSettings { get; set; }
 
         public Alignment()
         {
-            Finder = new NormalDelimiterFinder();
+            this.Finder = new NormalDelimiterFinder();
         }
 
-        public int PerformAlignment(string delimiter, int minIndex = 0, bool addSpace = false)
+        public Int32 PerformAlignment(String delimiter, Int32 minIndex = 0, Boolean addSpace = false)
         {
-            var lines = Selector.GetLinesToAlign(View);
-            var data  = lines.Select(x => new LineDetails(x, Finder, delimiter, minIndex, View.TabSize))
-                             .Where(y => y.Index >= 0).ToArray();
+            IEnumerable<ILine> lines = this.Selector.GetLinesToAlign(this.View);
+            LineDetails[] data = lines
+                .Select(x => new LineDetails(x, this.Finder, delimiter, minIndex, this.View.TabSize))
+                .Where(y => y.Index >= 0)
+                .ToArray();
 
             if (!data.Any())
+            {
                 return -1;
+            }
 
-            int targetPosition = data.MaxItemsBy(y => y.Position)
-                                     .Max(x => x.GetPositionToAlignTo(addSpace, View.TabSize));
+            Int32 targetPosition = data
+                .MaxItemsBy(y => y.Position)
+                .Max(x => x.GetPositionToAlignTo(addSpace, this.View.TabSize));
 
-            CommitChanges(data, targetPosition);
+            this.CommitChanges(data, targetPosition);
             return targetPosition;
         }
 
-        void CommitChanges(LineDetails[] data, int targetPosition)
+        void CommitChanges(LineDetails[] data, Int32 targetPosition)
         {
-            using (var edit = View.StartEdit())
+            using (IEdit edit = this.View.StartEdit())
             {
-                foreach (var change in data)
+                foreach (LineDetails change in data)
                 {
-                    if (!edit.Insert(change.Line, change.Index, GetSpacesToInsert(change.Position, targetPosition)))
+                    if (!edit.Insert(change.Line, change.Index, this.GetSpacesToInsert(change.Position, targetPosition)))
+                    {
                         return;
+                    }
                 }
 
                 edit.Commit();
             }
         }
 
-        string GetSpacesToInsert(int startIndex, int endIndex)
+        String GetSpacesToInsert(Int32 startIndex, Int32 endIndex)
         {
-            bool useSpaces = View.ConvertTabsToSpaces;
-            if (useSpaces || !UseIdeTabSettings)
-                return string.Empty.PadLeft(endIndex - startIndex);
+            Boolean useSpaces = this.View.ConvertTabsToSpaces;
+            if (useSpaces || !this.UseIdeTabSettings)
+            {
+                return String.Empty.PadLeft(endIndex - startIndex);
+            }
 
-            int spaces = endIndex % View.TabSize;
-            int tabs   = (int)Math.Ceiling((endIndex - spaces - startIndex) / (double)View.TabSize);
+            Int32 spaces = endIndex % this.View.TabSize;
+            Int32 tabs   = (Int32)Math.Ceiling((endIndex - spaces - startIndex) / (Double)this.View.TabSize);
 
-            return (tabs == 0) ? string.Empty.PadLeft(endIndex - startIndex)
-                               : string.Empty.PadLeft(tabs, '\t') + string.Empty.PadLeft(spaces);
+            return (tabs == 0) ? String.Empty.PadLeft(endIndex - startIndex)
+                               : String.Empty.PadLeft(tabs, '\t') + String.Empty.PadLeft(spaces);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace CMcG.CodeAlignment.Test.Business.DelimiterFinders
         [Fact]
         public void GetIndex()
         {
-            var instance = new NormalDelimiterFinder();
+            NormalDelimiterFinder instance = new NormalDelimiterFinder();
             Assert.Equal(0, instance.GetIndex("a",      "a", 0, 4).CompareIndex);
             Assert.Equal(1, instance.GetIndex("\ta",    "a", 4, 4).CompareIndex);
             Assert.Equal(2, instance.GetIndex(" \ta",   "a", 4, 4).CompareIndex);
@@ -21,7 +21,7 @@ namespace CMcG.CodeAlignment.Test.Business.DelimiterFinders
         [Fact]
         public void TabbifyIndex()
         {
-            var instance = new NormalDelimiterFinder();
+            NormalDelimiterFinder instance = new NormalDelimiterFinder();
             Assert.Equal(2, instance.TabbifyIndex("\ta",  5, 4));
             Assert.Equal(2, instance.TabbifyIndex("\ta",  2, 4));
             Assert.Equal(0, instance.TabbifyIndex("\ta",  3, 4));

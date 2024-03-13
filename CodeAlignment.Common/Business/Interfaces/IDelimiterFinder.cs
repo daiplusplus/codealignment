@@ -4,6 +4,6 @@ namespace CMcG.CodeAlignment.Business
 {
     public interface IDelimiterFinder
     {
-        DelimiterResult GetIndex(string source, string delimiter, int minIndex, int tabSize);
+        DelimiterResult GetIndex(String source, String delimiter, Int32 minIndex, Int32 tabSize);
     }
 }

@@ -7,9 +7,9 @@ namespace CMcG.CodeAlignment.Test.Business.Mocks
 {
     public class MockEdit : IEdit
     {
-        public bool Insert(ILine line, int position, string text)
+        public Boolean Insert(ILine line, Int32 position, String text )
         {
-            var mockLine  = (MockLine)line;
+            MockLine mockLine  = (MockLine)line;
             mockLine.Text = mockLine.Text.Insert(position, text);
             return true;
         }

@@ -8,15 +8,17 @@ namespace CMcG.CodeAlignment.Options
     {
         public ShortcutLine()
         {
-            InitializeComponent();
-            bindKeyLookup.DataSource = KeyLookup.GetKeys();
+            this.InitializeComponent();
+            this.bindKeyLookup.DataSource = KeyLookup.GetKeys();
         }
 
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
-            if (Tag != null)
-                bindShortcut.DataSource = Tag;
+            if (this.Tag != null)
+            {
+                this.bindShortcut.DataSource = this.Tag;
+            }
         }
     }
 }

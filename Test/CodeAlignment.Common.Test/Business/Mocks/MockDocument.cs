@@ -10,27 +10,27 @@ namespace CMcG.CodeAlignment.Test.Business.Mocks
     public class MockDocuments : IDocument
     {
         MockLine[] m_lines;
-        public string[] Lines
+        public String[] Lines
         {
-            get { return m_lines.Select(x => x.Text).ToArray(); }
-            set { m_lines = value.Select(x => new MockLine { Text = x }).ToArray(); }
+            get { return this.m_lines.Select(x => x.Text).ToArray(); }
+            set { this.m_lines = value.Select(x => new MockLine { Text = x }).ToArray(); }
         }
 
-        public int LineCount
+        public Int32 LineCount
         {
-            get { return m_lines.Length; }
+            get { return this.m_lines.Length; }
         }
 
-        public int    StartSelectionLineNumber { get; set; }
-        public int    EndSelectionLineNumber   { get; set; }
-        public int    CaretColumn              { get; set; }
-        public bool   ConvertTabsToSpaces      { get; set; }
-        public int    TabSize                  { get; set; }
-        public string FileType                 { get; set; }
+        public Int32 StartSelectionLineNumber { get; set; }
+        public Int32 EndSelectionLineNumber   { get; set; }
+        public Int32 CaretColumn              { get; set; }
+        public Boolean ConvertTabsToSpaces      { get; set; }
+        public Int32 TabSize                  { get; set; }
+        public String FileType                 { get; set; }
 
-        public ILine GetLineFromLineNumber(int lineNo)
+        public ILine GetLineFromLineNumber(Int32 lineNo )
         {
-            return m_lines[lineNo];
+            return this.m_lines[lineNo];
         }
 
         public IEdit StartEdit()

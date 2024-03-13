@@ -5,10 +5,10 @@ namespace CMcG.CodeAlignment.Business
 {
     public class DelimiterResult
     {
-        public int CompareIndex { get; set; }
-        public int InsertIndex  { get; set; }
+        public Int32 CompareIndex { get; set; }
+        public Int32 InsertIndex  { get; set; }
 
-        public static DelimiterResult Create(int index)
+        public static DelimiterResult Create(Int32 index)
         {
             return new DelimiterResult
             {

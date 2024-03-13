@@ -6,24 +6,28 @@ namespace CMcG.CodeAlignment.Business
 {
     public static class Extensions
     {
-        public static IEnumerable<int> UpTo(this int start, int end)
+        public static IEnumerable<Int32> UpTo(this Int32 start, Int32 end)
         {
-            for (int i = start; i <= end; i++)
+            for (Int32 i = start; i <= end; i++)
+            {
                 yield return i;
+            }
         }
 
-        public static IEnumerable<int> DownTo(this int start, int end)
+        public static IEnumerable<Int32> DownTo(this Int32 start, Int32 end)
         {
-            for (int i = start; i >= end; i--)
+            for (Int32 i = start; i >= end; i--)
+            {
                 yield return i;
+            }
         }
 
-        public static string ReplaceTabs(this string value, int tabSize)
+        public static String ReplaceTabs(this String value, Int32 tabSize)
         {
-            int index = value.IndexOf('\t');
+            Int32 index = value.IndexOf('\t');
             while (index >= 0)
             {
-                value = value.Remove(index, 1).Insert(index, string.Empty.PadLeft(tabSize - (index % tabSize)));
+                value = value.Remove(index, 1).Insert(index, String.Empty.PadLeft(tabSize - (index % tabSize)));
                 index = value.IndexOf('\t');
             }
 
@@ -37,14 +41,14 @@ namespace CMcG.CodeAlignment.Business
 
         public static IEnumerable<TSource> MaxItemsBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> selector)
         {
-            var maxValue = source.Max(selector);
-            var comparer = Comparer<TKey>.Default;
+            TKey maxValue = source.Max(selector);
+            Comparer<TKey> comparer = Comparer<TKey>.Default;
             return source.Where(x => comparer.Compare(selector.Invoke(x), maxValue) == 0);
         }
 
-        public static string Aggregate(this IEnumerable<string> source, string join)
+        public static String Aggregate(this IEnumerable<String> source, String join )
         {
-            return source.Any() ? source.Aggregate((a, b) => a + join + b) : string.Empty;
+            return source.Any() ? source.Aggregate((a, b) => a + join + b) : String.Empty;
         }
     }
 }

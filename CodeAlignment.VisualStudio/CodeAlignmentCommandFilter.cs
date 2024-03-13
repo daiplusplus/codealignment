@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using CMcG.CodeAlignment.Implementations;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
@@ -14,8 +13,8 @@ namespace CMcG.CodeAlignment
 
         public CodeAlignmentCommandFilter(IVsTextView textViewAdapter, IWpfTextView view)
         {
-            m_view            = view;
-            m_textViewAdapter = textViewAdapter;
+            this.m_view            = view;
+            this.m_textViewAdapter = textViewAdapter;
         }
 
         protected override Guid CommandGuid
@@ -23,15 +22,16 @@ namespace CMcG.CodeAlignment
             get { return GuidList.CmdSetGuid; }
         }
 
-        public override void Execute(uint cmdId)
+        public override void Execute( UInt32 cmdId )
         {
-            var functions = new AlignFunctions
+            AlignFunctions functions = new AlignFunctions
             {
                 UIManager     = new UIManager(),
-                Document      = new Document(m_view),
-                Handle        = m_textViewAdapter.GetWindowHandle(),
+                Document      = new Document(this.m_view),
+                Handle        = this.m_textViewAdapter.GetWindowHandle(),
                 KeyGrabOffset = new System.Drawing.Point(10, -35)
             };
+
             switch (cmdId)
             {
                 case Commands.AlignBy             : functions.AlignByDialog();                    break;

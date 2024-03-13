@@ -4,7 +4,7 @@ namespace CMcG.CodeAlignment.Business
 {
     public interface ILine
     {
-        int    Position { get; }
-        string Text     { get; }
+        Int32  Position { get; }
+        String Text     { get; }
     }
 }

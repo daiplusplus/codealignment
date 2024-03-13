@@ -1,6 +1,7 @@
 ﻿using System;
-using Microsoft.VisualStudio.Shell;
 using System.Runtime.InteropServices;
+
+using Microsoft.VisualStudio.Shell;
 
 namespace CMcG.CodeAlignment
 {

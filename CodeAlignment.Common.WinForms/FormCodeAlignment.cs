@@ -9,63 +9,67 @@ namespace CMcG.CodeAlignment
     {
         public FormCodeAlignment()
         {
-            InitializeComponent();
-            UseRegex = Settings.Default.UseRegex;
+            this.InitializeComponent();
+            this.UseRegex = Settings.Default.UseRegex;
             if (Settings.Default.Delimiters == null)
             {
                 Settings.Default.Delimiters = new System.Collections.Specialized.StringCollection();
                 Settings.Default.Save();
             }
 
-            foreach (string delimiter in Settings.Default.Delimiters)
-                cboDelimiter.Items.Add(delimiter);
+            foreach (String delimiter in Settings.Default.Delimiters)
+            {
+                this.cboDelimiter.Items.Add(delimiter);
+            }
 
-            if (cboDelimiter.Items.Count > 0)
-                cboDelimiter.SelectedIndex = 0;
+            if (this.cboDelimiter.Items.Count > 0)
+            {
+                this.cboDelimiter.SelectedIndex = 0;
+            }
         }
 
-        void Ok(object sender = null, EventArgs e = null)
+        void Ok(Object sender = null, EventArgs e = null)
         {
-            Settings.Default.Delimiters.Remove(cboDelimiter.Text);
-            Settings.Default.Delimiters.Insert(0, cboDelimiter.Text);
-            Settings.Default.UseRegex = UseRegex;
+            Settings.Default.Delimiters.Remove(this.cboDelimiter.Text);
+            Settings.Default.Delimiters.Insert(0, this.cboDelimiter.Text);
+            Settings.Default.UseRegex = this.UseRegex;
             Settings.Default.Save();
-            DialogResult = DialogResult.OK;
-            Close();
+            this.DialogResult = DialogResult.OK;
+            this.Close();
         }
 
-        void Cancel(object sender, EventArgs e)
+        void Cancel(Object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
         }
 
-        void ShowHelp(object sender, System.ComponentModel.CancelEventArgs e)
+        void ShowHelp(Object sender, System.ComponentModel.CancelEventArgs e)
         {
             new FormAbout().ShowDialog();
             e.Cancel = true;
         }
 
-        void ShowOptions(object sender, EventArgs e)
+        void ShowOptions(Object sender, EventArgs e)
         {
             new Options.FormOptions().ShowDialog(this);
         }
 
-        public string Delimiter
+        public String Delimiter
         {
-            get { return cboDelimiter.Text; }
+            get { return this.cboDelimiter.Text; }
         }
 
-        public bool AlignFromCaret
+        public Boolean AlignFromCaret
         {
-            get { return chkAlignFromCaret.Checked || (Control.ModifierKeys == Keys.Shift); }
-            set { chkAlignFromCaret.Checked = value; }
+            get { return this.chkAlignFromCaret.Checked || (Control.ModifierKeys == Keys.Shift); }
+            set { this.chkAlignFromCaret.Checked = value; }
         }
 
-        public bool UseRegex
+        public Boolean UseRegex
         {
-            get { return chkUseRegex.Checked; }
-            set { chkUseRegex.Checked = value; }
+            get { return this.chkUseRegex.Checked; }
+            set { this.chkUseRegex.Checked = value; }
         }
     }
 }

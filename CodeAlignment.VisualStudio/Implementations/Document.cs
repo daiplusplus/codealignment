@@ -1,76 +1,77 @@
 ﻿using System;
-using System.Linq;
+
 using CMcG.CodeAlignment.Business;
+
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
 
 namespace CMcG.CodeAlignment.Implementations
 {
-    class Document : IDocument
+    internal class Document : IDocument
     {
-        IWpfTextView  m_doc;
-        ITextSnapshot m_snapshot;
+        private readonly IWpfTextView  m_doc;
+        private          ITextSnapshot m_snapshot;
 
         public Document(IWpfTextView doc)
         {
-            m_doc      = doc;
-            m_snapshot = doc.TextSnapshot;
+            this.m_doc      = doc;
+            this.m_snapshot = doc.TextSnapshot;
         }
 
-        public int LineCount
+        public Int32 LineCount
         {
-            get { return m_snapshot.LineCount; }
+            get { return this.m_snapshot.LineCount; }
         }
 
-        public int StartSelectionLineNumber
+        public Int32 StartSelectionLineNumber
         {
-            get { return m_snapshot.GetLineNumberFromPosition(m_doc.Selection.Start.Position); }
+            get { return this.m_snapshot.GetLineNumberFromPosition(this.m_doc.Selection.Start.Position); }
         }
 
-        public int EndSelectionLineNumber
+        public Int32 EndSelectionLineNumber
         {
-            get { return m_snapshot.GetLineNumberFromPosition(m_doc.Selection.End.Position); }
+            get { return this.m_snapshot.GetLineNumberFromPosition(this.m_doc.Selection.End.Position); }
         }
 
-        public int CaretColumn
+        public Int32 CaretColumn
         {
             get
             {
-                var caret = m_doc.Caret.Position.BufferPosition;
-                var index = m_doc.GetTextViewLineContainingBufferPosition(caret).Start.Difference(caret);
-                var line  = m_snapshot.GetLineFromPosition(caret).GetText().Substring(0, index);
-                return line.ReplaceTabs(TabSize).Length + m_doc.Caret.Position.VirtualSpaces;
+                SnapshotPoint caret = this.m_doc.Caret.Position.BufferPosition;
+                Int32  index = this.m_doc.GetTextViewLineContainingBufferPosition(caret).Start.Difference(caret);
+                String line  = this.m_snapshot.GetLineFromPosition(caret).GetText().Substring(0, index);
+                return line.ReplaceTabs(this.TabSize).Length + this.m_doc.Caret.Position.VirtualSpaces;
             }
         }
 
-        public bool ConvertTabsToSpaces
+        public Boolean ConvertTabsToSpaces
         {
-            get { return m_doc.Options.GetOptionValue(DefaultOptions.ConvertTabsToSpacesOptionId); }
+            get { return this.m_doc.Options.GetOptionValue(DefaultOptions.ConvertTabsToSpacesOptionId); }
         }
 
-        public int TabSize
+        public Int32 TabSize
         {
-            get { return m_doc.Options.GetOptionValue(DefaultOptions.TabSizeOptionId); }
+            get { return this.m_doc.Options.GetOptionValue(DefaultOptions.TabSizeOptionId); }
         }
 
-        public ILine GetLineFromLineNumber(int lineNo)
+        public ILine GetLineFromLineNumber(Int32 lineNo)
         {
-            return new Line(m_snapshot.GetLineFromLineNumber(lineNo));
+            return new Line(this.m_snapshot.GetLineFromLineNumber(lineNo));
         }
 
         public IEdit StartEdit()
         {
-            return new Edit(m_snapshot.TextBuffer.CreateEdit());
+            return new Edit(this.m_snapshot.TextBuffer.CreateEdit());
         }
 
-        public string FileType
+        public String FileType
         {
-            get { return "." + m_doc.TextBuffer.ContentType.TypeName.ToLower(); }
+            get { return "." + this.m_doc.TextBuffer.ContentType.TypeName.ToLower(); }
         }
 
         public void Refresh()
         {
-            m_snapshot = m_doc.TextSnapshot;
+            this.m_snapshot = this.m_doc.TextSnapshot;
         }
     }
 }

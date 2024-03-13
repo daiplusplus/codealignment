@@ -6,58 +6,60 @@ namespace CMcG.CodeAlignment.Business
 {
     public class XmlScopeSelector : IScopeSelector
     {
-        public int? Start { get; set; }
-        public int? End   { get; set; }
+        public Int32? Start { get; set; }
+        public Int32? End   { get; set; }
 
         public IEnumerable<ILine> GetLinesToAlign(IDocument view)
         {
-            int start = Start ?? view.StartSelectionLineNumber;
-            int end   = End   ?? view.EndSelectionLineNumber;
+            Int32 start = this.Start ?? view.StartSelectionLineNumber;
+            Int32 end   = this.End   ?? view.EndSelectionLineNumber;
 
             if (start == end)
             {
-                var line = view.GetLineFromLineNumber(start).Text.ReplaceTabs(view.TabSize);
-                var isMulti = IsMultiLineTag(view, line);
+                String line = view.GetLineFromLineNumber(start).Text.ReplaceTabs(view.TabSize);
+                Boolean isMulti = this.IsMultiLineTag(view, line);
 
-                var blanks = isMulti ? start      .DownTo(0).Where(x => IsMultiLineStart(view, x))
-                                     : (start + 1).DownTo(1).Where(x => IsNotSameScope(view, x - 1, line));
+                IEnumerable<Int32> blanks = isMulti ?
+                    (start + 0).DownTo(0).Where(x => this.IsMultiLineStart(view, x)) :
+                    (start + 1).DownTo(1).Where(x => this.IsNotSameScope(view, x - 1, line));
 
-                start      = blanks.Any() ? blanks.First() : 0;
+                start  = blanks.Any() ? blanks.First() : 0;
 
-                blanks     = isMulti ?  end     .UpTo(view.LineCount - 1).Where(x => IsMultiLineEnd(view, x))
-                                     : (end - 1).UpTo(view.LineCount - 2).Where(x => IsNotSameScope(view, x + 1, line));
-                end        = blanks.Any() ? blanks.First() : view.LineCount - 1;
+                blanks = isMulti ? (end - 0).UpTo(view.LineCount - 1).Where(x => this.IsMultiLineEnd(view, x + 0))
+                                 : (end - 1).UpTo(view.LineCount - 2).Where(x => this.IsNotSameScope(view, x + 1, line));
+
+                end    = blanks.Any() ? blanks.First() : view.LineCount - 1;
             }
 
-            return start.UpTo(end).Select(x => view.GetLineFromLineNumber(x));
+            return start.UpTo(end).Select(view.GetLineFromLineNumber);
         }
 
-        bool IsMultiLineTag(IDocument view, string line)
+        Boolean IsMultiLineTag(IDocument view, String line)
         {
             line = line.Trim();
             return !line.StartsWith("<") || !line.Contains(">");
         }
 
-        bool IsMultiLineStart(IDocument view, int lineNo)
+        Boolean IsMultiLineStart(IDocument view, Int32 lineNo)
         {
-            var blankStrings = new[] { string.Empty,  };
-            var line = view.GetLineFromLineNumber(lineNo).Text.Trim();
-            return line == string.Empty || line.StartsWith("<");
+            String[] blankStrings = new[] { String.Empty,  };
+            String line = view.GetLineFromLineNumber(lineNo).Text.Trim();
+            return line == String.Empty || line.StartsWith("<");
         }
 
-        bool IsMultiLineEnd(IDocument view, int lineNo)
+        Boolean IsMultiLineEnd(IDocument view, Int32 lineNo)
         {
-            var blankStrings = new[] { string.Empty,  };
-            var line = view.GetLineFromLineNumber(lineNo).Text.Trim();
-            return line == string.Empty || line.Contains(">");
+            String[] blankStrings = new[] { String.Empty,  };
+            String line = view.GetLineFromLineNumber(lineNo).Text.Trim();
+            return line == String.Empty || line.Contains(">");
         }
 
-        bool IsNotSameScope(IDocument view, int lineNo, string original)
+        Boolean IsNotSameScope(IDocument view, Int32 lineNo, String original)
         {
-            var line           = view.GetLineFromLineNumber(lineNo).Text.ReplaceTabs(view.TabSize);
-            var lineIndent     = line    .Length - line    .TrimStart().Length;
-            var originalIndent = original.Length - original.TrimStart().Length;
-            return line.Trim() == string.Empty || lineIndent != originalIndent;
+            String line           = view.GetLineFromLineNumber(lineNo).Text.ReplaceTabs(view.TabSize);
+            Int32  lineIndent     = line    .Length - line    .TrimStart().Length;
+            Int32  originalIndent = original.Length - original.TrimStart().Length;
+            return line.Trim() == String.Empty || lineIndent != originalIndent;
         }
     }
 }

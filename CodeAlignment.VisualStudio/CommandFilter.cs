@@ -1,7 +1,8 @@
 using System;
-using System.Linq;
+
 using Microsoft.VisualStudio;
 using Microsoft.VisualStudio.OLE.Interop;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.TextManager.Interop;
 
 namespace CMcG.CodeAlignment
@@ -12,44 +13,54 @@ namespace CMcG.CodeAlignment
 
         public IOleCommandTarget Next { get; set; }
 
-        public int Exec(ref Guid cmdGroup, uint cmdId, uint options, IntPtr inArg, IntPtr outArg)
+        public Int32 Exec(ref Guid cmdGroup, UInt32 cmdId, UInt32 options, IntPtr inArg, IntPtr outArg)
         {
-            if (cmdGroup != CommandGuid)
-                return Next.Exec(ref cmdGroup, cmdId, options, inArg, outArg);
+            ThreadHelper.ThrowIfNotOnUIThread();
 
-            Execute(cmdId);
-            return VSConstants.S_OK;
-        }
+            if (cmdGroup != this.CommandGuid )
+            {
+                return this.Next.Exec(ref cmdGroup, cmdId, options, inArg, outArg);
+            }
 
-        public int QueryStatus(ref Guid cmdGroup, uint cmdCount, OLECMD[] cmds, IntPtr cmdText)
-        {
-            if (cmdGroup != CommandGuid)
-                return Next.QueryStatus(ref cmdGroup, cmdCount, cmds, cmdText);
-
-            foreach (var cmd in cmds)
-                cmds[0].cmdf = (uint)CanExecuteResult(cmd.cmdID);
+            this.Execute(cmdId);
 
             return VSConstants.S_OK;
         }
 
-        public OLECMDF CanExecuteResult(uint cmdId)
+        public Int32 QueryStatus(ref Guid cmdGroup, UInt32 cmdCount, OLECMD[] cmds, IntPtr cmdText)
         {
-            return CanExecute(cmdId) ? (OLECMDF.OLECMDF_ENABLED | OLECMDF.OLECMDF_SUPPORTED)
-                                     :  OLECMDF.OLECMDF_SUPPORTED;
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            if (cmdGroup != this.CommandGuid )
+            {
+                return this.Next.QueryStatus(ref cmdGroup, cmdCount, cmds, cmdText);
+            }
+
+            foreach (OLECMD cmd in cmds)
+            {
+                cmds[0].cmdf = (UInt32)this.CanExecuteResult(cmd.cmdID);
+            }
+
+            return VSConstants.S_OK;
         }
 
-        public virtual bool CanExecute(uint cmdId)
+        public OLECMDF CanExecuteResult(UInt32 cmdId )
         {
-            return true;
+            return this.CanExecute(cmdId) ?
+                (OLECMDF.OLECMDF_ENABLED | OLECMDF.OLECMDF_SUPPORTED ) :
+                (OLECMDF.OLECMDF_SUPPORTED );
         }
 
-        public abstract void Execute(uint cmdId);
+        public virtual Boolean CanExecute(UInt32 cmdId ) => true;
+
+        public abstract void Execute(UInt32 cmdId );
 
         public static void Register(IVsTextView textViewAdapter, CommandFilter filter)
         {
-            IOleCommandTarget next;
-            if (ErrorHandler.Succeeded(textViewAdapter.AddCommandFilter(filter, out next)))
+            if (ErrorHandler.Succeeded(textViewAdapter.AddCommandFilter(filter, out IOleCommandTarget next)))
+            {
                 filter.Next = next;
+            }
         }
     }
 }

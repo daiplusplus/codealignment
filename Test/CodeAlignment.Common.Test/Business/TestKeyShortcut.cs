@@ -13,7 +13,7 @@ namespace CMcG.CodeAlignment.Test.Business
         [Fact]
         public void SerializeAndGet()
         {
-            var shortcut = new KeyShortcut
+            KeyShortcut shortcut = new KeyShortcut
             {
                 AddSpace       = true,
                 AlignFromCaret = true,
@@ -23,11 +23,11 @@ namespace CMcG.CodeAlignment.Test.Business
                 Value          = Key.EqualsPlus
             };
 
-            var xml        = KeyShortcut.Serialize(new[] { shortcut });
-            var cloneArray = KeyShortcut.Get(xml);
+            String xml        = KeyShortcut.Serialize(new[] { shortcut });
+            KeyShortcut[] cloneArray = KeyShortcut.Get(xml);
             Assert.Single(cloneArray);
 
-            var clone = cloneArray[0];
+            KeyShortcut clone = cloneArray[0];
 
             Assert.Equal(shortcut.AddSpace,       clone.AddSpace);
             Assert.Equal(shortcut.AlignFromCaret, clone.AlignFromCaret);

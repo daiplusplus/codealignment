@@ -4,16 +4,16 @@ namespace CMcG.CodeAlignment.Business
 {
     public interface IDocument
     {
-        int    LineCount                { get; }
-        int    StartSelectionLineNumber { get; }
-        int    EndSelectionLineNumber   { get; }
-        int    CaretColumn              { get; }
-        bool   ConvertTabsToSpaces      { get; }
-        int    TabSize                  { get; }
-        string FileType                 { get; }
+        Int32   LineCount                { get; }
+        Int32   StartSelectionLineNumber { get; }
+        Int32   EndSelectionLineNumber   { get; }
+        Int32   CaretColumn              { get; }
+        Boolean ConvertTabsToSpaces      { get; }
+        Int32   TabSize                  { get; }
+        String  FileType                 { get; }
 
-        ILine GetLineFromLineNumber(int lineNo);
+        ILine GetLineFromLineNumber(Int32 lineNo);
         IEdit StartEdit();
-        void Refresh();
+        void  Refresh();
     }
 }

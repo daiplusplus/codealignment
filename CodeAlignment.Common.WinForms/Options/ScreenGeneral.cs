@@ -10,27 +10,31 @@ namespace CMcG.CodeAlignment.Options
         Business.Options m_options;
         public ScreenGeneral(Business.Options options)
         {
-            InitializeComponent();
-            m_options              = options;
-            bindOptions.DataSource = m_options;
+            this.InitializeComponent();
+            this.m_options              = options;
+            this.bindOptions.DataSource = this.m_options;
         }
 
-        void ResetMruList(object sender, EventArgs e)
+        void ResetMruList(Object sender, EventArgs e)
         {
             Settings.Default.Delimiters = new System.Collections.Specialized.StringCollection();
             Settings.Default.Save();
         }
 
-        void BackupSettings(object sender, EventArgs e)
+        void BackupSettings(Object sender, EventArgs e)
         {
-            if (dlgSave.ShowDialog() == DialogResult.OK)
-                m_options.SaveAs(dlgSave.FileName);
+            if (this.dlgSave.ShowDialog() == DialogResult.OK)
+            {
+                this.m_options.SaveAs(this.dlgSave.FileName);
+            }
         }
 
-        void RestoreSettings(object sender, EventArgs e)
+        void RestoreSettings(Object sender, EventArgs e)
         {
-            if (dlgLoad.ShowDialog() == DialogResult.OK)
-                m_options.LoadFrom(dlgLoad.FileName);
+            if (this.dlgLoad.ShowDialog() == DialogResult.OK)
+            {
+                this.m_options.LoadFrom(this.dlgLoad.FileName);
+            }
         }
     }
 }

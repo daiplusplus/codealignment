@@ -8,15 +8,15 @@ namespace CMcG.CodeAlignment.Options
         Business.Options m_options;
         public ScreenSelectors(Business.Options options)
         {
-            InitializeComponent();
-            m_options              = options;
-            bindOptions.DataSource = m_options;
+            this.InitializeComponent();
+            this.m_options              = options;
+            this.bindOptions.DataSource = this.m_options;
         }
 
-        void RestoreDefaults(object sender, EventArgs e)
+        void RestoreDefaults(Object sender, EventArgs e)
         {
-            m_options.ResetSelectorTypes();
-            bindOptions.ResetBindings(false);
+            this.m_options.ResetSelectorTypes();
+            this.bindOptions.ResetBindings(false);
         }
     }
 }

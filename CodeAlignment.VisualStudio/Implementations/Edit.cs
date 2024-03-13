@@ -1,34 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using CMcG.CodeAlignment.Business;
+﻿using CMcG.CodeAlignment.Business;
+
 using Microsoft.VisualStudio.Text;
 
 namespace CMcG.CodeAlignment.Implementations
 {
-    class Edit : IEdit
+    internal class Edit : IEdit
     {
-        ITextEdit m_edit;
+        private readonly ITextEdit m_edit;
 
         public Edit(ITextEdit edit)
         {
-            m_edit = edit;
+            this.m_edit = edit;
         }
 
-        public bool Insert(ILine line, int position, string text)
+        public System.Boolean Insert(ILine line, System.Int32 position, System.String text )
         {
-            return m_edit.Insert(line.Position + position, text);
+            return this.m_edit.Insert(line.Position + position, text);
         }
 
         public void Commit()
         {
-            m_edit.Apply();
+            _ = this.m_edit.Apply();
         }
 
         public void Dispose()
         {
-            m_edit.Dispose();
+            this.m_edit.Dispose();
         }
     }
 }

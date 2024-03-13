@@ -11,30 +11,30 @@ namespace CMcG.CodeAlignment
         Alignment m_alignment;
         AlignFunctions m_functions;
 
-        int m_lastAlignment = -1;
+        Int32 m_lastAlignment = -1;
 
         public AlignmentViewModel(AlignFunctions functions, Alignment alignment)
         {
-            m_alignment = alignment;
-            m_functions = functions;
+            this.m_alignment = alignment;
+            this.m_functions = functions;
         }
 
         public void AlignFromPosition()
         {
-            m_functions.AlignByDialog(alignFromCaret:true);
+            this.m_functions.AlignByDialog(alignFromCaret:true);
         }
 
-        public int PerformAlign(Key key, bool forceFromCaret)
+        public Int32 PerformAlign(Key key, Boolean forceFromCaret )
         {
-            m_alignment.View.Refresh();
-            var shortcut = m_options.GetShortcut(key, m_functions.Document.FileType);
+            this.m_alignment.View.Refresh();
+            KeyShortcut shortcut = this.m_options.GetShortcut(key, this.m_functions.Document.FileType);
 
-            if (shortcut != null && !string.IsNullOrEmpty(shortcut.Alignment))
+            if (shortcut != null && !String.IsNullOrEmpty(shortcut.Alignment))
             {
-                m_alignment.Finder = GetFinder(shortcut);
-                int minIndex       = GetMinIndex(forceFromCaret, shortcut);
-                m_lastAlignment    = m_alignment.PerformAlignment(shortcut.Alignment, minIndex, shortcut.AddSpace);
-                return m_lastAlignment;
+                this.m_alignment.Finder = this.GetFinder(shortcut);
+                Int32 minIndex       = this.GetMinIndex(forceFromCaret, shortcut);
+                this.m_lastAlignment    = this.m_alignment.PerformAlignment(shortcut.Alignment, minIndex, shortcut.AddSpace);
+                return this.m_lastAlignment;
             }
 
             return -1;
@@ -45,13 +45,17 @@ namespace CMcG.CodeAlignment
             return shortcut.UseRegex ? new RegexDelimiterFinder() : new NormalDelimiterFinder();
         }
 
-        int GetMinIndex(bool forceFromCaret, KeyShortcut shortcut)
+        Int32 GetMinIndex( Boolean forceFromCaret, KeyShortcut shortcut)
         {
-            if (m_lastAlignment != -1)
-                return m_lastAlignment + 1;
+            if ( this.m_lastAlignment != -1)
+            {
+                return this.m_lastAlignment + 1;
+            }
 
             if (forceFromCaret || shortcut.AlignFromCaret)
-                return m_functions.Document.CaretColumn;
+            {
+                return this.m_functions.Document.CaretColumn;
+            }
 
             return 0;
         }

@@ -5,25 +5,28 @@ namespace CMcG.CodeAlignment.Business
 {
     public class NormalDelimiterFinder : IDelimiterFinder
     {
-        public virtual DelimiterResult GetIndex(string source, string delimiter, int minIndex, int tabSize)
+        public virtual DelimiterResult GetIndex(String source, String delimiter, Int32 minIndex, Int32 tabSize)
         {
-            minIndex = TabbifyIndex(source, minIndex, tabSize);
+            minIndex = this.TabbifyIndex(source, minIndex, tabSize);
 
-            int result = source.Length >= minIndex ? source.IndexOf(delimiter, minIndex) : -1;
+            Int32 result = source.Length >= minIndex ? source.IndexOf(delimiter, minIndex) : -1;
             return DelimiterResult.Create(result);
         }
 
-        public int TabbifyIndex(string source, int minIndex, int tabSize)
+        public Int32 TabbifyIndex(String source, Int32 minIndex, Int32 tabSize)
         {
-            int adjustment = 0;
-            int index      = source.IndexOf('\t');
+            Int32 adjustment = 0;
+            Int32 index      = source.IndexOf('\t');
 
             while (index >= 0 && index < minIndex)
             {
-                int padding = tabSize - (index % tabSize);
+                Int32 padding = tabSize - (index % tabSize);
                 if (index + padding - 1 <= minIndex)
+                {
                     adjustment += padding - 1;
-                source = source.Remove(index, 1).Insert(index, string.Empty.PadLeft(padding));
+                }
+
+                source = source.Remove(index, 1).Insert(index, String.Empty.PadLeft(padding));
                 index  = source.IndexOf('\t');
             }
 

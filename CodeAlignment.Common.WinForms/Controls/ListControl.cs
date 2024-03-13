@@ -12,72 +12,80 @@ namespace CMcG.CodeAlignment.Controls
 
         public ListControl()
         {
-            InitializeComponent();
-            AutoScroll = true;
+            this.InitializeComponent();
+            this.AutoScroll = true;
         }
 
         public Type ViewType
         {
-            get { return m_viewType; }
+            get { return this.m_viewType; }
             set
             {
-                m_viewType = value;
-                RefreshList();
+                this.m_viewType = value;
+                this.RefreshList();
             }
         }
 
         public IList Items
         {
-            get { return m_items; }
+            get { return this.m_items; }
             set
             {
-                m_items = value;
-                RefreshList();
+                this.m_items = value;
+                this.RefreshList();
             }
         }
 
         public void RefreshList()
         {
-            foreach (Control ctl in Controls)
+            foreach (Control ctl in this.Controls )
+            {
                 ctl.Dispose();
+            }
 
-            Controls.Clear();
+            this.Controls.Clear();
 
-            if (ViewType == null)
+            if (this.ViewType == null)
+            {
                 return;
+            }
 
-            if (Items == null)
-                Controls.Add(CreateChild());
+            if (this.Items == null)
+            {
+                this.Controls.Add(this.CreateChild());
+            }
             else
-                Controls.AddRange(Items.Cast<object>().Select(CreateChild).ToArray());
+            {
+                this.Controls.AddRange(this.Items.Cast<Object>().Select(this.CreateChild).ToArray());
+            }
         }
 
-        public void AddItem(object context)
+        public void AddItem(Object context )
         {
-            Items.Add(context);
-            Controls.Add(CreateChild(context));
+            this.Items.Add(context);
+            this.Controls.Add(this.CreateChild(context));
         }
 
-        Control CreateChild(object context = null)
+        Control CreateChild(Object context = null)
         {
-            var item  = (Control)Activator.CreateInstance(ViewType);
+            Control item  = (Control)Activator.CreateInstance(this.ViewType);
             item.Tag  = context;
             item.Dock = DockStyle.Fill;
 
-            var panel     = new BaseUserControl { Dock = DockStyle.Top, Height = item.Height };
-            var btnRemove = new Button { Text = "-", Dock = DockStyle.Right, Width = 30 };
+            BaseUserControl panel     = new BaseUserControl { Dock = DockStyle.Top, Height = item.Height };
+            Button btnRemove = new Button { Text = "-", Dock = DockStyle.Right, Width = 30 };
 
-            btnRemove.Click += (s, e) => RemoveItem(context);
+            btnRemove.Click += (s, e) => this.RemoveItem(context);
             panel.Controls.Add(item);
             panel.Controls.Add(btnRemove);
 
             return panel;
         }
 
-        void RemoveItem(object context)
+        void RemoveItem(Object context )
         {
-            Items.Remove(context);
-            RefreshList();
+            this.Items.Remove(context);
+            this.RefreshList();
         }
     }
 }

@@ -7,24 +7,26 @@ namespace CMcG.CodeAlignment.Business
 {
     public class LineDetails
     {
-        public LineDetails(ILine line, IDelimiterFinder finder, string delimiter, int minIndex, int tabSize)
+        public LineDetails(ILine line, IDelimiterFinder finder, String delimiter, Int32 minIndex, Int32 tabSize )
         {
-            var withoutTabs = line.Text.ReplaceTabs(tabSize);
-            Line            = line;
-            Index           = finder.GetIndex(line.Text,   delimiter, minIndex, tabSize).InsertIndex;
-            Position        = finder.GetIndex(withoutTabs, delimiter, minIndex, tabSize).CompareIndex;
+            String withoutTabs = line.Text.ReplaceTabs(tabSize);
+            this.Line            = line;
+            this.Index           = finder.GetIndex(line.Text,   delimiter, minIndex, tabSize).InsertIndex;
+            this.Position        = finder.GetIndex(withoutTabs, delimiter, minIndex, tabSize).CompareIndex;
         }
 
         public ILine Line     { get; private set; }
-        public int   Index    { get; private set; }
-        public int   Position { get; private set; }
+        public Int32 Index    { get; private set; }
+        public Int32 Position { get; private set; }
 
-        public int GetPositionToAlignTo(bool addSpace, int tabSize)
+        public Int32 GetPositionToAlignTo(Boolean addSpace, Int32 tabSize)
         {
-            if (addSpace && Position > 0 && Line.Text.ReplaceTabs(tabSize)[Position - 1] != ' ')
-                return Position + 1;
+            if (addSpace && this.Position > 0 && this.Line.Text.ReplaceTabs(tabSize)[this.Position - 1] != ' ')
+            {
+                return this.Position + 1;
+            }
 
-            return Position;
+            return this.Position;
         }
     }
 }

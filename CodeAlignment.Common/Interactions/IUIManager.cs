@@ -10,20 +10,21 @@ namespace CMcG.CodeAlignment.Interactions
     {
         IKeyGrabber GetKeyGrabber(AlignmentViewModel viewModel);
 
-        IAlignmentDetails PromptForAlignment(bool alignFromCaret);
+        IAlignmentDetails PromptForAlignment(Boolean alignFromCaret);
     }
 
     public interface IKeyGrabber : IDisposable
     {
         AlignmentViewModel ViewModel { get; set; }
+
         void Display();
         void SetBounds(Rectangle bounds);
     }
 
     public interface IAlignmentDetails
     {
-        string Delimiter      { get; }
-        bool   AlignFromCaret { get; set; }
-        bool   UseRegex       { get; set; }
+        String  Delimiter      { get; }
+        Boolean AlignFromCaret { get; set; }
+        Boolean UseRegex       { get; set; }
     }
 }

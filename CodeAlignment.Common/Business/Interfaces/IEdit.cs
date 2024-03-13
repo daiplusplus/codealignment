@@ -4,7 +4,8 @@ namespace CMcG.CodeAlignment.Business
 {
     public interface IEdit : IDisposable
     {
-        bool Insert(ILine line, int position, string text);
+        Boolean Insert(ILine line, Int32 position, String text);
+
         void Commit();
     }
 }

@@ -12,9 +12,9 @@ namespace CMcG.CodeAlignment
             return new FormKeyGrabber { ViewModel = viewModel };
         }
 
-        public IAlignmentDetails PromptForAlignment(bool alignFromCaret)
+        public IAlignmentDetails PromptForAlignment(Boolean alignFromCaret )
         {
-            var form = new FormCodeAlignment { AlignFromCaret = alignFromCaret };
+            FormCodeAlignment form = new FormCodeAlignment { AlignFromCaret = alignFromCaret };
             return form.ShowDialog() == System.Windows.Forms.DialogResult.Cancel ? null : form;
         }
     }

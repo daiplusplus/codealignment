@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Xml.Serialization;
 
 namespace CMcG.CodeAlignment.Business
@@ -8,26 +7,30 @@ namespace CMcG.CodeAlignment.Business
     [Serializable]
     public class KeyShortcut
     {
-        public Key    Value          { get; set; }
-        public string Alignment      { get; set; }
-        public string Language       { get; set; }
-        public bool   AlignFromCaret { get; set; }
-        public bool   UseRegex       { get; set; }
-        public bool   AddSpace       { get; set; }
+        private static readonly XmlSerializer _keyShortcutArraySerializer = new XmlSerializer(typeof(KeyShortcut[]));
 
-        public static KeyShortcut[] Get(string xml)
+        public Key     Value          { get; set; }
+        public String  Alignment      { get; set; }
+        public String  Language       { get; set; }
+        public Boolean AlignFromCaret { get; set; }
+        public Boolean UseRegex       { get; set; }
+        public Boolean AddSpace       { get; set; }
+
+        public static KeyShortcut[] Get(String xml)
         {
-            var serializer = new XmlSerializer(typeof(KeyShortcut[]));
-            var reader     = new StringReader(xml);
-            return (KeyShortcut[])serializer.Deserialize(reader);
+            using (StringReader reader = new StringReader(xml))
+            {
+                return (KeyShortcut[])_keyShortcutArraySerializer.Deserialize(reader);
+            }
         }
 
-        public static string Serialize(KeyShortcut[] shortcuts)
+        public static String Serialize(KeyShortcut[] shortcuts)
         {
-            var serializer = new XmlSerializer(shortcuts.GetType());
-            var writer     = new StringWriter();
-            serializer.Serialize(writer, shortcuts);
-            return writer.ToString();
+            using (StringWriter writer = new StringWriter())
+            {
+                _keyShortcutArraySerializer.Serialize(writer, shortcuts);
+                return writer.ToString();
+            }
         }
     }
 }

@@ -79,7 +79,6 @@
     <Compile Include="Implementations\Document.cs" />
     <Compile Include="Implementations\Edit.cs" />
     <Compile Include="Implementations\Line.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="CodeAlignmentPackage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Commands.cs" />

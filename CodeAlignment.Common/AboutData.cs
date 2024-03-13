@@ -16,29 +16,29 @@ namespace CMcG.CodeAlignment
             set { s_mainAssembly = value; }
         }
 
-        public string AssemblyTitle
+        public String AssemblyTitle
         {
             get
             {
-                var title = GetAttributeProperty<AssemblyTitleAttribute>(x => x.Title);
-                return title != string.Empty ? title : "Code alignment";
+                String title = this.GetAttributeProperty<AssemblyTitleAttribute>(x => x.Title);
+                return title != String.Empty ? title : "Code alignment";
             }
         }
 
-        public string AssemblyVersion
+        public String AssemblyVersion
         {
             get { return MainAssembly.GetName().Version.ToString(); }
         }
 
-        public string AssemblyCopyright
+        public String AssemblyCopyright
         {
-            get { return GetAttributeProperty<AssemblyCopyrightAttribute>(x => x.Copyright); }
+            get { return this.GetAttributeProperty<AssemblyCopyrightAttribute>(x => x.Copyright); }
         }
 
-        public string GetAttributeProperty<T>(Func<T, string> getProperty) where T : Attribute
+        public String GetAttributeProperty<T>(Func<T, String> getProperty) where T : Attribute
         {
-            var attribute = (T)MainAssembly.GetCustomAttributes(typeof(T), false).FirstOrDefault();
-            return attribute != null ? getProperty.Invoke(attribute) : string.Empty;
+            T attribute = (T)MainAssembly.GetCustomAttributes(typeof(T), false).FirstOrDefault();
+            return attribute != null ? getProperty.Invoke(attribute) : String.Empty;
         }
     }
 }

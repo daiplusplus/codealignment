@@ -1,9 +1,9 @@
-using System;
-using Microsoft.VisualStudio.Editor;
-using Microsoft.VisualStudio.Utilities;
 using System.ComponentModel.Composition;
+
+using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
+using Microsoft.VisualStudio.Utilities;
 
 namespace CMcG.CodeAlignment
 {
@@ -12,20 +12,24 @@ namespace CMcG.CodeAlignment
     [TextViewRole(PredefinedTextViewRoles.Editable)]
     class VsTextViewCreationListener : IVsTextViewCreationListener
     {
+#pragma warning disable IDE0044 // Add readonly modifier // This field is set by MEF.
         [Import]
-        IVsEditorAdaptersFactoryService AdaptersFactory = null;
+        private IVsEditorAdaptersFactoryService AdaptersFactory = null;
+#pragma warning restore IDE0044
 
         static VsTextViewCreationListener()
         {
             AboutData.MainAssembly = System.Reflection.Assembly.GetExecutingAssembly();
-            AboutData.Image        = Resources.CodeAlignmentVSBanner;
+            AboutData.Image        = VSPackage.CodeAlignmentVSBanner;
         }
 
         public void VsTextViewCreated(IVsTextView textViewAdapter)
         {
-            var wpfTextView = AdaptersFactory.GetWpfTextView(textViewAdapter);
+            IWpfTextView wpfTextView = this.AdaptersFactory.GetWpfTextView(textViewAdapter);
             if (wpfTextView != null)
+            {
                 CommandFilter.Register(textViewAdapter, new CodeAlignmentCommandFilter(textViewAdapter, wpfTextView));
+            }
         }
     }
 }

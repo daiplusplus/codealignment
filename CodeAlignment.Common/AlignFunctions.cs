@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Drawing;
+
 using CMcG.CodeAlignment.Business;
 using CMcG.CodeAlignment.Interactions;
 
@@ -17,60 +18,76 @@ namespace CMcG.CodeAlignment
 
         public Point KeyGrabOffset
         {
-            get { return m_keyGrabOffset; }
-            set { m_keyGrabOffset = value; }
+            get { return this.m_keyGrabOffset; }
+            set { this.m_keyGrabOffset = value; }
         }
 
-        public void AlignBy(string alignDelimiter, bool alignFromCaret = false, bool useRegex = false, bool addSpace = false)
+        public void AlignBy( String alignDelimiter, Boolean alignFromCaret = false, Boolean useRegex = false, Boolean addSpace = false)
         {
-            if (!string.IsNullOrEmpty(alignDelimiter))
-                CreateAlignment(useRegex).PerformAlignment(alignDelimiter, alignFromCaret ? Document.CaretColumn : 0, addSpace);
+            if (!String.IsNullOrEmpty(alignDelimiter))
+            {
+                this.CreateAlignment(useRegex).PerformAlignment(alignDelimiter, alignFromCaret ? this.Document.CaretColumn : 0, addSpace);
+            }
         }
 
-        public void AlignBy(Key key, bool forceFromCaret = false)
+        public void AlignBy(Key key, Boolean forceFromCaret = false)
         {
-            var shortcut = m_options.GetShortcut(key, Document.FileType);
+            KeyShortcut shortcut = this.m_options.GetShortcut(key, this.Document.FileType);
             if (shortcut != null)
-                AlignBy(shortcut.Alignment, forceFromCaret || shortcut.AlignFromCaret, shortcut.UseRegex, shortcut.AddSpace);
+            {
+                this.AlignBy(shortcut.Alignment, forceFromCaret || shortcut.AlignFromCaret, shortcut.UseRegex, shortcut.AddSpace);
+            }
         }
 
-        public void AlignByDialog(bool alignFromCaret = false)
+        public void AlignByDialog( Boolean alignFromCaret = false)
         {
-            var result = UIManager.PromptForAlignment(alignFromCaret);
+            IAlignmentDetails result = this.UIManager.PromptForAlignment(alignFromCaret);
             if (result != null)
-                AlignBy(result.Delimiter, result.AlignFromCaret, useRegex:result.UseRegex);
+            {
+                this.AlignBy(result.Delimiter, result.AlignFromCaret, useRegex:result.UseRegex);
+            }
         }
 
-        Alignment CreateAlignment(bool useRegex = false)
+        private Alignment CreateAlignment( Boolean useRegex = false)
         {
-            var alignment = new Alignment { View = Document, UseIdeTabSettings = m_options.UseIdeTabSettings };
+            Alignment alignment = new Alignment
+            {
+                View = this.Document,
+                UseIdeTabSettings = this.m_options.UseIdeTabSettings
+            };
 
-            if (m_options.XmlTypes.Contains(Document.FileType))
+            if ( this.m_options.XmlTypes.Contains( this.Document.FileType))
+            {
                 alignment.Selector = new XmlScopeSelector
-                                     {
-                                         Start              = Document.StartSelectionLineNumber,
-                                         End                = Document.EndSelectionLineNumber
-                                     };
+                {
+                    Start              = this.Document.StartSelectionLineNumber,
+                    End                = this.Document.EndSelectionLineNumber
+                };
+            }
             else
+            {
                 alignment.Selector = new GeneralScopeSelector
-                                     {
-                                         ScopeSelectorRegex = m_options.ScopeSelectorRegex,
-                                         Start              = Document.StartSelectionLineNumber,
-                                         End                = Document.EndSelectionLineNumber
-                                     };
+                {
+                    ScopeSelectorRegex = this.m_options.ScopeSelectorRegex,
+                    Start              = this.Document.StartSelectionLineNumber,
+                    End                = this.Document.EndSelectionLineNumber
+                };
+            }
 
             if (useRegex)
+            {
                 alignment.Finder = new RegexDelimiterFinder();
+            }
 
             return alignment;
         }
 
         public void AlignByKey()
         {
-            var viewModel = new AlignmentViewModel(this, CreateAlignment());
-            var bounds    = new LocationCalculator().CalculateBounds(Handle, KeyGrabOffset);
+            AlignmentViewModel viewModel = new AlignmentViewModel(this, this.CreateAlignment());
+            Rectangle bounds = new LocationCalculator().CalculateBounds(this.Handle, this.KeyGrabOffset);
 
-            using (var grabber = UIManager.GetKeyGrabber(viewModel))
+            using (IKeyGrabber grabber = this.UIManager.GetKeyGrabber(viewModel))
             {
                 grabber.SetBounds(bounds);
                 grabber.Display();

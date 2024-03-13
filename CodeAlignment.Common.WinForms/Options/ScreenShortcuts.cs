@@ -8,22 +8,22 @@ namespace CMcG.CodeAlignment.Options
     {
         public ScreenShortcuts(Business.Options context)
         {
-            InitializeComponent();
-            DataContext        = context;
-            listShortcut.Items = DataContext.Shortcuts;
+            this.InitializeComponent();
+            this.DataContext        = context;
+            this.listShortcut.Items = this.DataContext.Shortcuts;
         }
 
         Business.Options DataContext { get; set; }
 
-        void AddShortcut(object sender, EventArgs e)
+        void AddShortcut(Object sender, EventArgs e)
         {
-            listShortcut.AddItem(new KeyShortcut());
+            this.listShortcut.AddItem(new KeyShortcut());
         }
 
-        void RestoreDefaults(object sender, EventArgs e)
+        void RestoreDefaults(Object sender, EventArgs e)
         {
-            DataContext.ResetShortcuts();
-            listShortcut.Items = DataContext.Shortcuts;
+            this.DataContext.ResetShortcuts();
+            this.listShortcut.Items = this.DataContext.Shortcuts;
         }
     }
 }

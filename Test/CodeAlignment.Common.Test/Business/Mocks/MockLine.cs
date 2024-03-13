@@ -7,7 +7,7 @@ namespace CMcG.CodeAlignment.Test.Business.Mocks
 {
     public class MockLine : ILine
     {
-        public int    Position { get; set; }
-        public string Text     { get; set; }
+        public Int32 Position { get; set; }
+        public String Text     { get; set; }
     }
 }

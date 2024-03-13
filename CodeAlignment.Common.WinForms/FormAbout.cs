@@ -9,21 +9,23 @@ namespace CMcG.CodeAlignment
     {
         public FormAbout()
         {
-            InitializeComponent();
-            var data = new AboutData();
-            Text                = string.Format("About {0}",   data.AssemblyTitle);
-            labelVersion  .Text = string.Format("Version {0}", data.AssemblyVersion);
-            labelCopyright.Text = data.AssemblyCopyright;
+            this.InitializeComponent();
+            AboutData data = new AboutData();
+            this.Text                = String.Format("About {0}",   data.AssemblyTitle);
+            this.labelVersion  .Text = String.Format("Version {0}", data.AssemblyVersion);
+            this.labelCopyright.Text = data.AssemblyCopyright;
             if (AboutData.Image != null)
-                ctlLogo.Image = AboutData.Image;
+            {
+                this.ctlLogo.Image = AboutData.Image;
+            }
         }
 
-        void GoToWebsite(object sender, LinkLabelLinkClickedEventArgs e)
+        void GoToWebsite(Object sender, LinkLabelLinkClickedEventArgs e)
         {
             Process.Start("http://www.codealignment.com");
         }
 
-        void Donate(object sender, EventArgs e)
+        void Donate(Object sender, EventArgs e)
         {
             Process.Start("https://www.paypal.com/cgi-bin/webscr?hosted_button_id=AZZSHWMQ946V2&cmd=_s-xclick");
         }

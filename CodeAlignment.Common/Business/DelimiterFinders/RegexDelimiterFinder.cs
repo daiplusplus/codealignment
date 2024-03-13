@@ -6,17 +6,16 @@ namespace CMcG.CodeAlignment.Business
 {
     public class RegexDelimiterFinder : NormalDelimiterFinder
     {
-        public override DelimiterResult GetIndex(string source, string delimiter, int minIndex, int tabSize)
+        public override DelimiterResult GetIndex(String source, String delimiter, Int32 minIndex, Int32 tabSize)
         {
-            minIndex = TabbifyIndex(source, minIndex, tabSize);
+            minIndex = this.TabbifyIndex(source, minIndex, tabSize);
 
             if (source.Length < minIndex)
             {
                 return DelimiterResult.Create(-1);
             }
 
-            var match = Regex.Match(source.Substring(minIndex), delimiter);
-
+            Match match = Regex.Match(source.Substring(minIndex), delimiter);
             if (!match.Success)
             {
                 return DelimiterResult.Create(-1);
@@ -24,18 +23,20 @@ namespace CMcG.CodeAlignment.Business
 
             return new DelimiterResult
             {
-                CompareIndex = minIndex + GetGroupIndex(match, "compare", "x"),
-                InsertIndex  = minIndex + GetGroupIndex(match, "insert", "compare", "x")
+                CompareIndex = minIndex + this.GetGroupIndex(match, "compare", "x"),
+                InsertIndex  = minIndex + this.GetGroupIndex(match, "insert", "compare", "x")
             };
         }
 
-        int GetGroupIndex(Match match, params string[] keys)
+        Int32 GetGroupIndex(Match match, params String[] keys)
         {
-            foreach (var key in keys)
+            foreach (String key in keys)
             {
-                var group = match.Groups[key];
+                Group group = match.Groups[key];
                 if (group.Success)
+                {
                     return group.Index;
+                }
             }
 
             return match.Index;
