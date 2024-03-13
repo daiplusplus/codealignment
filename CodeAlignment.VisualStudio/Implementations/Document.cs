@@ -66,7 +66,7 @@ namespace CMcG.CodeAlignment.Implementations
 
         public String FileType
         {
-            get { return "." + this.m_doc.TextBuffer.ContentType.TypeName.ToLower(); }
+            get { return "." + this.m_doc.TextBuffer.ContentType.TypeName.ToLowerInvariant(); }
         }
 
         public void Refresh()

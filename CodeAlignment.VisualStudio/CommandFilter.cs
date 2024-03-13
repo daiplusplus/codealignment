@@ -29,6 +29,7 @@ namespace CMcG.CodeAlignment
 
         public Int32 QueryStatus(ref Guid cmdGroup, UInt32 cmdCount, OLECMD[] cmds, IntPtr cmdText)
         {
+            if (cmds is null) throw new ArgumentNullException(nameof(cmds));
             ThreadHelper.ThrowIfNotOnUIThread();
 
             if (cmdGroup != this.CommandGuid)
@@ -57,6 +58,9 @@ namespace CMcG.CodeAlignment
 
         public static void Register(IVsTextView textViewAdapter, CommandFilter filter)
         {
+            if (textViewAdapter is null) throw new ArgumentNullException(nameof(textViewAdapter));
+            if (filter          is null) throw new ArgumentNullException(nameof(filter));
+
             if (ErrorHandler.Succeeded(textViewAdapter.AddCommandFilter(filter, out IOleCommandTarget next)))
             {
                 filter.Next = next;
