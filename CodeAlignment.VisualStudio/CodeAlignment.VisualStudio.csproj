@@ -105,6 +105,7 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\ReleaseNotes.txt" />
     <Resource Include="Resources\Images_v3.png" />
     <Resource Include="Resources\Images_v2.png" />
     <Resource Include="Resources\CodeAlignmentStroke.ico" />

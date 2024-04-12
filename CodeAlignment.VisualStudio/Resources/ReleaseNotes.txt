@@ -1,0 +1,3 @@
+v17.0.0 (to match VS2022's v17):
+	* Old "Product ID": "2adcbb11-89c4-451e-97f2-14049154ccad", new ID (from guidgen): "{C80843C0-3176-46EE-9EAE-B44AE79DCCB3}"
+	* Adds buttons for one-click alignment by colon `:` and comma `,`.
