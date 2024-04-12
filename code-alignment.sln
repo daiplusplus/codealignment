@@ -5,6 +5,7 @@ VisualStudioVersion = 17.8.34701.33
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{86B3F4F3-B993-42A8-AA6A-D564F377B6CA}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		CodeAlignment.ico = CodeAlignment.ico
 		CodeAlignment.snk = CodeAlignment.snk
 	EndProjectSection

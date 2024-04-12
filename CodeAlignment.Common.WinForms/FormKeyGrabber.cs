@@ -31,7 +31,7 @@ namespace CMcG.CodeAlignment
                 return;
             }
 
-            this.ViewModel.PerformAlign((Key)key, e.Shift);
+            _ = this.ViewModel.PerformAlign(key: (Key)key, forceFromCaret: e.Shift);
 
             if (!e.Control)
             {
@@ -44,7 +44,7 @@ namespace CMcG.CodeAlignment
             }
         }
 
-        Key? GetKey(KeyEventArgs e)
+        private Key? GetKey(KeyEventArgs e)
         {
             if (Enum.IsDefined(typeof(Key), (Int32)e.KeyCode))
             {
@@ -67,10 +67,10 @@ namespace CMcG.CodeAlignment
             }
         }
 
-        const Int32  KEY_UP        = 257;
-        const Int64 LEFT_CONTROL  = 3223126017,
-                   RIGHT_CONTROL = 3239903233;
-
+        private const Int32 KEY_UP        =        257;
+        private const Int64 LEFT_CONTROL  = 3223126017;
+        private const Int64 RIGHT_CONTROL = 3239903233;
+        
         protected override void WndProc(ref Message m)
         {
             if (this.m_isChained && m.Msg == KEY_UP)
@@ -78,7 +78,7 @@ namespace CMcG.CodeAlignment
                 Int64 value = m.LParam.ToInt64();
                 if (value < 0)
                 {
-                    value = this.ToUnsigned(value);
+                    value = ToUnsigned(value);
                 }
 
                 if (value == LEFT_CONTROL || value == RIGHT_CONTROL)
@@ -90,7 +90,7 @@ namespace CMcG.CodeAlignment
             base.WndProc(ref m);
         }
 
-        Int64 ToUnsigned(Int64 intValue) => intValue & 0xffffffffL;
+        private static Int64 ToUnsigned(Int64 intValue) => intValue & 0xffffffffL; // <-- uhhh... this only preserves the lower 32-bits, so shouldn't this be namned `ToUInt32AsInt64` or something?
 
         public void Display() => this.ShowDialog();
 

@@ -1,33 +1,32 @@
 using System;
+
+using CMcG.CodeAlignment.Business;
 using CMcG.CodeAlignment.Implementations;
+
 using Microsoft.VisualStudio.Text.Editor;
 using Microsoft.VisualStudio.TextManager.Interop;
-using CMcG.CodeAlignment.Business;
 
 namespace CMcG.CodeAlignment
 {
     sealed class CodeAlignmentCommandFilter : CommandFilter
     {
-        IWpfTextView m_view;
-        IVsTextView  m_textViewAdapter;
+        private readonly IWpfTextView m_view;
+        private readonly IVsTextView  m_textViewAdapter;
 
         public CodeAlignmentCommandFilter(IVsTextView textViewAdapter, IWpfTextView view)
         {
-            this.m_view            = view;
-            this.m_textViewAdapter = textViewAdapter;
+            this.m_view            = view            ?? throw new ArgumentNullException( nameof(view) );
+            this.m_textViewAdapter = textViewAdapter ?? throw new ArgumentNullException( nameof(textViewAdapter) );
         }
 
-        protected override Guid CommandGuid
-        {
-            get { return GuidList.CmdSetGuid; }
-        }
+        protected override Guid CommandGuid => GuidList.CmdSetGuid;
 
-        public override void Execute(UInt32 cmdId )
+        public override void Execute(UInt32 cmdId)
         {
-            AlignFunctions functions = new AlignFunctions
+            AlignFunctions functions = new AlignFunctions // <-- QUESTION: Should this be instantiated on every call?
             {
                 UIManager     = new UIManager(),
-                Document      = new Document(this.m_view),
+                Document      = new Document(doc: this.m_view),
                 Handle        = this.m_textViewAdapter.GetWindowHandle(),
                 KeyGrabOffset = new System.Drawing.Point(10, -35)
             };
@@ -45,6 +44,10 @@ namespace CMcG.CodeAlignment
                 case Commands.AlignFromCaret      : functions.AlignByDialog(alignFromCaret:true); break;
                 case Commands.AlignByColon        : functions.AlignBy(":");                       break;
                 case Commands.AlignByComma        : functions.AlignBy(",");                       break;
+#if DEBUG
+                default:
+                    throw new ArgumentOutOfRangeException(paramName: nameof(cmdId), actualValue: cmdId, message: "Unrecognized value.");
+#endif
             }
         }
     }

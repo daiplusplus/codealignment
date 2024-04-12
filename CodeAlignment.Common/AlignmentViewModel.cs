@@ -24,6 +24,7 @@ namespace CMcG.CodeAlignment
             this.m_functions.AlignByDialog(alignFromCaret:true);
         }
 
+        /// <summary>Returns the alignment's position - or <c>-1</c>.</summary>
         public Int32 PerformAlign(Key key, Boolean forceFromCaret)
         {
             this.m_alignment.View.Refresh();
@@ -32,7 +33,7 @@ namespace CMcG.CodeAlignment
             if (shortcut != null && !String.IsNullOrEmpty(shortcut.Alignment))
             {
                 this.m_alignment.Finder = this.GetFinder(shortcut);
-                Int32 minIndex       = this.GetMinIndex(forceFromCaret, shortcut);
+                Int32 minIndex          = this.GetMinIndex(forceFromCaret, shortcut);
                 this.m_lastAlignment    = this.m_alignment.PerformAlignment(shortcut.Alignment, minIndex, shortcut.AddSpace);
                 return this.m_lastAlignment;
             }

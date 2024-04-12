@@ -4,6 +4,7 @@ using CMcG.CodeAlignment.Business;
 
 using Microsoft.VisualStudio.Text;
 using Microsoft.VisualStudio.Text.Editor;
+using Microsoft.VisualStudio.Utilities;
 
 namespace CMcG.CodeAlignment.Implementations
 {
@@ -66,7 +67,16 @@ namespace CMcG.CodeAlignment.Implementations
 
         public String FileType
         {
-            get { return "." + this.m_doc.TextBuffer.ContentType.TypeName.ToLowerInvariant(); }
+            get
+            {
+                IContentType vsContentType = this.m_doc.TextBuffer.ContentType;
+                
+#pragma warning disable CA1308 // Normalize strings to uppercase
+                String asFileExtension = "." + vsContentType.TypeName.ToLowerInvariant();
+#pragma warning restore
+
+                return asFileExtension;
+            }
         }
 
         public void Refresh()

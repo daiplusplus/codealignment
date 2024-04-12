@@ -13,33 +13,33 @@ namespace CMcG.CodeAlignment
 
         public IOleCommandTarget Next { get; set; }
 
-        public Int32 Exec(ref Guid cmdGroup, UInt32 cmdId, UInt32 options, IntPtr inArg, IntPtr outArg)
+        public Int32 Exec(ref Guid pguidCmdGroup, UInt32 nCmdID, UInt32 nCmdexecopt, IntPtr pvaIn, IntPtr pvaOut)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (cmdGroup != this.CommandGuid)
+            if (pguidCmdGroup != this.CommandGuid)
             {
-                return this.Next.Exec(ref cmdGroup, cmdId, options, inArg, outArg);
+                return this.Next.Exec(ref pguidCmdGroup, nCmdID, nCmdexecopt, pvaIn, pvaOut);
             }
 
-            this.Execute(cmdId);
+            this.Execute(nCmdID);
 
             return VSConstants.S_OK;
         }
 
-        public Int32 QueryStatus(ref Guid cmdGroup, UInt32 cmdCount, OLECMD[] cmds, IntPtr cmdText)
+        public Int32 QueryStatus(ref Guid pguidCmdGroup, UInt32 cCmds, OLECMD[] prgCmds, IntPtr pCmdText)
         {
-            if (cmds is null) throw new ArgumentNullException(nameof(cmds));
+            if (prgCmds is null) throw new ArgumentNullException(nameof(prgCmds));
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            if (cmdGroup != this.CommandGuid)
+            if (pguidCmdGroup != this.CommandGuid)
             {
-                return this.Next.QueryStatus(ref cmdGroup, cmdCount, cmds, cmdText);
+                return this.Next.QueryStatus(ref pguidCmdGroup, cCmds, prgCmds, pCmdText);
             }
 
-            foreach (OLECMD cmd in cmds)
+            foreach (OLECMD cmd in prgCmds)
             {
-                cmds[0].cmdf = (UInt32)this.CanExecuteResult(cmd.cmdID);
+                prgCmds[0].cmdf = (UInt32)this.CanExecuteResult(cmd.cmdID);
             }
 
             return VSConstants.S_OK;
